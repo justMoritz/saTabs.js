@@ -18,7 +18,7 @@ Wrap each parent to a link in another parent, and give it the following attribut
 
 ### It should look something like this:
 
-    ```<div data-tabscrollnavcontainer>
+    <div data-tabscrollnavcontainer>
         <div>
             <div>   
                 <a href="#one">One</a>
@@ -27,51 +27,51 @@ Wrap each parent to a link in another parent, and give it the following attribut
                 <a href="#two">Two</a>
             </div>
         </div>
-    </div>```
+    </div>
 
 ### ---- OR ----
 
-    ```<ul>
+    <ul>
         <li>
             <a href="#one">One</a>
         </li>
         <li>
             <a href="#two">Two</a>
         </li>
-    </ul>```
+    </ul>
 
 ### 2.) A collection of "tabs", the content you want to display as tabs.
 I recommend it to look something like this:
 
-    ```<div>
+    <div>
         <div id="one">
             ...
         </div>
         <div id="tow">
             ...
         </div>
-    </div>```
+    </div>
 
     ---- OR ----
 
-    ```<article>
+    <article>
         <section id="one">
             ...
         </section>
         <section id="tow">
             ...
         </section>
-    </article>```
+    </article>
 
 
 In the body, right before the footer: Include jQuery. Include tabscroll.js.
 
-    ```<script src="path/to/your/scripts/jquery-2.1.4.min.js"></script>
-    <script src="path/to/your/scripts/textarea.js"></script>```
+    <script src="path/to/your/scripts/jquery-2.1.4.min.js"></script>
+    <script src="path/to/your/scripts/textarea.js"></script>
 
-That's it! Have fun.
+### That's it! Have fun.
 
-Advantages: No cluttered Markup: You just need to add one custom data-attribute.
+* Advantages: No cluttered Markup: You just need to add one custom data-attribute.
 
-* Notes: (The class for the active tab on the navigation is .tabscroll_activenav)*
+* Notes: (The class for the active tab on the navigation is .tabscroll_activenav)
 
