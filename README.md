@@ -1,5 +1,8 @@
 # Tabscroll.js
 
+## ABOUT:
+
+A simple and easy jQuery Plugin Script that lets you add a simple, bookmarable, browser-history-respecting tab content to any website. 
 
 
 ## SETUP:
@@ -14,7 +17,7 @@ Your links should link to `href="#one"` and `href="#two"`.
 Wrap each link in a parent. (This is important for styling, or if you are using a list)
 
 Wrap each parent to a link in another parent, and give it the following attribute
-`"data-tabscollnavcontainer"`.
+`"data-tabscrollnavcontainer"`.
 
 ### It should look something like this:
 
@@ -31,7 +34,7 @@ Wrap each parent to a link in another parent, and give it the following attribut
 
 #### ---- OR ----
 
-    <ul>
+    <ul data-tabscrollnavcontainer>
         <li>
             <a href="#one">One</a>
         </li>
@@ -58,7 +61,7 @@ I recommend it to look something like this:
         <section id="one">
             ...
         </section>
-        <section id="tow">
+        <section id="two">
             ...
         </section>
     </article>
@@ -67,11 +70,11 @@ I recommend it to look something like this:
 In the body, right before the footer: Include jQuery. Include tabscroll.js.
 
     <script src="path/to/your/scripts/jquery-2.1.4.min.js"></script>
-    <script src="path/to/your/scripts/textarea.js"></script>
+    <script src="path/to/your/scripts/tabscroll.js"></script>
 
 ### That's it! Have fun.
 
 * Advantages: No cluttered Markup: You just need to add one custom data-attribute.
 
-* Notes: (The class for the active tab on the navigation is .tabscroll_activenav)
+* Notes: (The class for the active tab on the navigation is `.tabscroll_activeNavi`)
 
