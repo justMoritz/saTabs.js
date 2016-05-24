@@ -29,7 +29,7 @@ Wrap each parent to a link in another parent, and give it the following attribut
         </div>
     </div>
 
-### ---- OR ----
+#### ---- OR ----
 
     <ul>
         <li>
@@ -52,7 +52,7 @@ I recommend it to look something like this:
         </div>
     </div>
 
-    ---- OR ----
+#### ---- OR ----
 
     <article>
         <section id="one">
