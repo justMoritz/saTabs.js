@@ -8,8 +8,8 @@ You need to have two things:
 ### 1.) A Navigation of links, with each link wrapped in a parent.
 
 In the collection of links, link the links via #s to the sections. 
-For example, you may have two divs, one has the id of id="one", the other id="tow"
-Your links should link to href="#one" and href="#two".
+For example, you may have two divs, one has the id of `id="one"`, the other `id="two"`
+Your links should link to `href="#one"` and `href="#two"`.
 
 Wrap each link in a parent. (This is important for styling, or if you are using a list)
 
