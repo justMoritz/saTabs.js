@@ -14,7 +14,7 @@ Your links should link to `href="#one"` and `href="#two"`.
 Wrap each link in a parent. (This is important for styling, or if you are using a list)
 
 Wrap each parent to a link in another parent, and give it the following attribute
-"data-tabscollnavcontainer".
+`"data-tabscollnavcontainer"`.
 
 ### It should look something like this:
 
