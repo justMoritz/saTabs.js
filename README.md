@@ -1,4 +1,6 @@
 # Tabscroll.js
+![TABSCROLL SAMPLE](http://files.moritzzimmer.com/tabscroll.gif)
+
 
 ## ABOUT:
 
