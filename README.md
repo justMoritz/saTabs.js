@@ -79,5 +79,9 @@ Then simply include jQuery. Include tabscroll.js. Call the Init Method.
 
 * Advantages: No cluttered Markup: You just need to add one custom data-attribute.
 
+* When no Javascript is enabled, your page will work perfectly fine!
+
+* You can actually bookmark tabs, and navigate between tabs with your browsers back and forward buttons.
+
 * Notes: (The class for the active tab on the navigation is `.tabscroll_activeNavi`)
 
