@@ -1,10 +1,10 @@
-# Tabscroll.js
+# saTabs.js
 ![TABSCROLL SAMPLE](http://files.moritzzimmer.com/tabscroll.gif)
 
 
 ## ABOUT:
 
-A simple and easy jQuery Plugin Script that lets you add a simple, bookmarable, browser-history-respecting tab content to any website. 
+A simple and easy jQuery Plugin Script that lets you add a simple, bookmarable, browser-history-respecting, **no-JS-fallback-safe** tab content to any website! 
 
 
 ## SETUP:
@@ -69,10 +69,11 @@ I recommend it to look something like this:
     </article>
 
 
-In the body, right before the footer: Include jQuery. Include tabscroll.js.
+In the body, right before the footer: Include jQuery. Include tabscroll.js. Call the Init Method.
 
     <script src="path/to/your/scripts/jquery-2.1.4.min.js"></script>
     <script src="path/to/your/scripts/tabscroll.js"></script>
+    <script> saTabs.init(); </script>
 
 ### That's it! Have fun.
 
