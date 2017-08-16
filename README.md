@@ -69,7 +69,7 @@ I recommend it to look something like this:
     </div>
 
 
-The simply include jQuery. Include tabscroll.js. Call the Init Method.
+Then simply include jQuery. Include tabscroll.js. Call the Init Method.
 
     <script src="path/to/your/scripts/jquery-2.1.4.min.js"></script>
     <script src="path/to/your/scripts/tabscroll.js"></script>
