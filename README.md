@@ -23,6 +23,17 @@ Wrap each parent to a link in another parent, and give it the following attribut
 
 ### It should look something like this:
 
+    <ul data-tabscrollnavcontainer>
+        <li>
+            <a href="#one">One</a>
+        </li>
+        <li>
+            <a href="#two">Two</a>
+        </li>
+    </ul>
+
+#### ---- OR ----
+
     <div data-tabscrollnavcontainer>
         <div>
             <div>   
@@ -33,17 +44,6 @@ Wrap each parent to a link in another parent, and give it the following attribut
             </div>
         </div>
     </div>
-
-#### ---- OR ----
-
-    <ul data-tabscrollnavcontainer>
-        <li>
-            <a href="#one">One</a>
-        </li>
-        <li>
-            <a href="#two">Two</a>
-        </li>
-    </ul>
 
 ### 2.) A collection of "tabs", the content you want to display as tabs.
 I recommend it to look something like this:
