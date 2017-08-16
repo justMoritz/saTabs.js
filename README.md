@@ -47,6 +47,17 @@ Wrap each parent to a link in another parent, and give it the following attribut
 
 ### 2.) A collection of "tabs", the content you want to display as tabs.
 I recommend it to look something like this:
+    
+    <article>
+        <section id="one">
+            ...
+        </section>
+        <section id="two">
+            ...
+        </section>
+    </article>
+
+#### ---- OR ----
 
     <div>
         <div id="one">
@@ -56,17 +67,6 @@ I recommend it to look something like this:
             ...
         </div>
     </div>
-
-#### ---- OR ----
-
-    <article>
-        <section id="one">
-            ...
-        </section>
-        <section id="two">
-            ...
-        </section>
-    </article>
 
 
 In the body, right before the footer: Include jQuery. Include tabscroll.js. Call the Init Method.
