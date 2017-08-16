@@ -77,6 +77,14 @@ Then simply include jQuery. Include tabscroll.js. Call the Init Method.
 
 ### That's it! Have fun.
 
+
+## Advanced Setup:
+
+You can control the type of transition between tabs with the `data-tabscrollnavcontainer` attribute. You can set it to:
+- `fade`
+- `slide`
+- or leave blank for no transition at all
+
 * Advantages: No cluttered Markup: You just need to add one custom data-attribute.
 
 * When no Javascript is enabled, your page will work perfectly fine!

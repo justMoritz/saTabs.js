@@ -46,7 +46,6 @@ var saTabs = (function( $ ){
         if ( $transition_type === 'fade') {
           $("[data-tabscroll='"+$location+"']").fadeIn().addClass('activeTab');   
           __activeClassHelperFunction($location);
-
         } 
         else if ( $transition_type === 'slide') {
           $("[data-tabscroll='"+$location+"']").slideDown().addClass('activeTab');   
