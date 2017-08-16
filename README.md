@@ -85,7 +85,9 @@ You can control the type of transition between tabs with the `data-tabscrollnavc
 - `slide`
 - or leave blank for no transition at all
 
-* Advantages: No cluttered Markup: You just need to add one custom data-attribute.
+## Advantages:
+
+* No cluttered Markup: You just need to add one custom data-attribute.
 
 * When no Javascript is enabled, your page will work perfectly fine!
 
