@@ -4,7 +4,7 @@
 
 ## ABOUT:
 
-A simple and easy jQuery Plugin Script that lets you add a simple, bookmarable, browser-history-respecting, **no-JS-fallback-safe** tab content to any website! 
+A simple and easy jQuery Plugin to add a simple, bookmarable, browser-history-respecting, **no-JS-fallback-safe** tab content to any website! 
 
 
 ## SETUP:
