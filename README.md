@@ -1,4 +1,4 @@
-# Tabscroll.js
+# saTabs.js
 ![TABSCROLL SAMPLE](http://files.moritzzimmer.com/tabscroll.gif)
 
 
