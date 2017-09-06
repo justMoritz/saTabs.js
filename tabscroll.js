@@ -9,121 +9,137 @@
  */
 var saTabs = (function( $ ){
 
-  /* * Tabs Functionality * */
-  var _saTabs = function () {
+/* * SA Tabs Functionality * * /
+   * 
+   *
+   * The SA Tabs Functionality Chain: 
+   * 1.) saTabs ->
+   * 1.1) -> 3
+   * 1.2) -> (Hash Change Listener, triggers 3)
+   *
+   * 2.) _saTabsSetUpPage
+   * 3.) _saTabsHashChangeFunct
+   *
+   * 
+   * 2: _saTabsSetUpPage: 
+   *    Finds all anchor tabs within the data-tabscrollnavcontainer and reads the attribute.
+   *    If a type was passed here, it will control the method of change: fade, slide and none.
+   *    The active class is added to the first tab-navigation
+   *
+   *    Then loops and targets each and every link's href-attribute found within the tabscrollnavcontainer
+   *    and adds the navigational data-attribute to each anchor tag's parent
+   *      
+   *    We then use this anchor to find each element, section, etc. that has the 
+   *    same ID as the anchor tag we found.
+   *
+   *    Final section sets a custom data-tabscroll attribute to each section that correspons
+   *    with the link in the navigation, stripping off the # (substring)
+   *
+   *    Also Removes each id tag of an data-tabscroll element (to help some browsers prevent)
+   *    default behaviour, and hiding all sections initially except the one specified.
+   */
+  var _saTabsSetUpPage = function() {
+    $tabscrollAnchors = $("[data-tabscrollnavcontainer]").find("a").not("[data-saexclude]");
+    $transition_type = $("[data-tabscrollnavcontainer]").attr("data-tabscrollnavcontainer");
+    $($tabscrollAnchors[0]).parent().addClass("tabscroll_activeNavi");
 
-    // checks the current location, matches it to the href-containing link, and adds correct class to parent
+    for ($i = 0; $i < $tabscrollAnchors.length; $i++){
+      var $eachAnchor = $($tabscrollAnchors[$i]).attr("href");
+      $($tabscrollAnchors[$i]).parent().attr("data-tabscrollnavi", $eachAnchor.substring(1)); 
+      $($eachAnchor).attr("data-tabscroll", $eachAnchor.substring(1));
+    }    
+    
+    $("[data-tabscroll]").removeAttr('id');
+    $("[data-tabscroll]:first-of-type").siblings("[data-tabscroll]").hide();   
+  };
+
+  /**
+   *
+   * 3: _saTabsHashChangeFunct: 
+   *    Called both initially in saTabs and also on each Hash (URL fragment) change, monitured
+   *    by the saTabs Method.
+   *
+   *    Writing the URL that raised the event into a string, stripping off everything before the hash
+   *    In order to parse the users navigational input.
+   *
+   *    If there is no hash (or it set to 'all'), show only the first section of tab content.
+   *    If there is a hash-link active, function will hide all tabs, fade in only the tab with 
+   *    the data-tabscroll attribute corresponding to the link that was clicked.
+   *
+   *    Finally, also checks for the 'fade' and 'slide' transition types, and executes different 
+   *    funcionality, which I would like to break out into different functions eventually.
+   */
+  var _saTabsHashChangeFunct = function() {
+    /* checks the current location, matches it to the href-containing link, and adds correct class to parent */
     var __activeClassHelperFunction = function($inputLoc){
-      for (i=0; i<$tabscroll_anchors.length; i++){
-        if( $($tabscroll_anchors[i]).attr('href') === "#"+$inputLoc ){
+      for (i=0; i<$tabscrollAnchors.length; i++){
+        if( $($tabscrollAnchors[i]).attr('href') === "#"+$inputLoc ){
           $('.tabscroll_activeNavi').removeClass('tabscroll_activeNavi');
-          $($tabscroll_anchors[i]).parent().addClass('tabscroll_activeNavi');
+          $($tabscrollAnchors[i]).parent().addClass('tabscroll_activeNavi');
         }
       }
     };
 
-    function hashChangeFunct () {
-      // writing the URL that raised the event into a string
-      var $location = String(document.location);
+    var $location = String(document.location);    
+    $location = $location = $location.split("#")[1];
 
-      // stripping off everything before the hash
-      $location = $location = $location.split("#")[1];
+    if ($location === undefined || $location === 'all' ){
+        $("[data-tabscroll]:first-of-type").show();   
+        $("[data-tabscroll]:first-of-type").addClass('activeTab');   
+    }
+    else{
+      $("[data-tabscroll]").hide().removeClass('activeTab');   
 
-      // if there is no hash, basically...
-      if ($location === undefined || $location === 'all' ){
-          // show only the first section
-          $("[data-tabscroll]:first-of-type").show();   
-          $("[data-tabscroll]:first-of-type").addClass('activeTab');   
+      if ( $transition_type === 'fade') {
+        $("[data-tabscroll='"+$location+"']").fadeIn().addClass('activeTab');   
+        __activeClassHelperFunction($location);
+
+      } 
+      else if ( $transition_type === 'slide') {
+        $("[data-tabscroll='"+$location+"']").slideDown().addClass('activeTab');   
+        __activeClassHelperFunction($location);
       }
-      // if there is a hash-link active
       else{
-        //hide all tabs
-        $("[data-tabscroll]").hide().removeClass('activeTab');   
+        $("[data-tabscroll='"+$location+"']").show().addClass('activeTab');   
+        __activeClassHelperFunction($location);
+      }
+    }             
+  };
 
-
-        // fade in only the tab with the data-tabscroll attribute corresponding
-        // to the link that was clicked.
-        if ( $transition_type === 'fade') {
-          $("[data-tabscroll='"+$location+"']").fadeIn().addClass('activeTab');   
-          __activeClassHelperFunction($location);
-        } 
-        else if ( $transition_type === 'slide') {
-          $("[data-tabscroll='"+$location+"']").slideDown().addClass('activeTab');   
-          __activeClassHelperFunction($location);
-        }
-        else{
-          $("[data-tabscroll='"+$location+"']").show().addClass('activeTab');   
-          __activeClassHelperFunction($location);
-        }
-      }             
-    }
-
-    function setUpPage() {
-      // finds all anchor tabs within the data-tabscrollnavcontainer
-      $tabscroll_anchors = $("[data-tabscrollnavcontainer]").find("a").not("[data-saexclude]");
-
-      // if we pass a type in here, we can control the method of change. Right now we can do fade, slide and none.
-      $transition_type = $("[data-tabscrollnavcontainer]").attr("data-tabscrollnavcontainer");
-      
-      // adds the active class to the first tab-navigation
-      $($tabscroll_anchors[0]).parent().addClass("tabscroll_activeNavi");
-
-      for ($i = 0; $i < $tabscroll_anchors.length; $i++){
-
-        // targets each and every link's href-attribute found within the tabscrollnavcontainer
-        var $eachAnchor = $($tabscroll_anchors[$i]).attr("href");
+  /**
+   *
+   * 1: saTabs: 
+   *    Runs the _saTabsSetUpPage function, the initial instance of the _saTabsHashChangeFunct,
+   *    then also monitors the hash change to run the _saTabsHashChangeFunct as needed.
+   *
+   *    Hash changed is implemented as follows:
+   *    Stores the previous hash, then listens if it has changed every frew millisectons
+   *    Needed for IE9. Adapted from https://stackoverflow.com/questions/680785/on-window-location-hash-change
+   *
+   *    (In previous versions, this had been triggered by $(window).on('hashchange', function (event) { )
+   */
+  var saTabs = function () {
+    _saTabsSetUpPage();
     
-        // adds the navigational data-attribute to each anchor tag's parent
-        $($tabscroll_anchors[$i]).parent().attr("data-tabscrollnavi", $eachAnchor.substring(1)); 
-        
-        // we then use this anchor to find each element, section, etc. that has the 
-        // same ID as the anchor tag we found.
-        
-        // sets a custom data-tabscroll attribute to each section that correspons
-        // with the link in the navigation, stripping off the # (substring)
-        $($eachAnchor).attr("data-tabscroll", $eachAnchor.substring(1));
-      }    
-    }
-     
-    setUpPage();
- 
-    // remove each id tag of an data-tabscroll element
-    $("[data-tabscroll]").removeAttr('id');
-     
-    // hiding all sections initially except the one specified.
-    $("[data-tabscroll]:first-of-type").siblings("[data-tabscroll]").hide();   
-    
-    /*
-     * stores the previous hash, then listens if it has changed every frew millisectons
-     * Needed for IE9. Adapted from https://stackoverflow.com/questions/680785/on-window-location-hash-change    
-     */
     var prevHash = window.location.hash;
     window.setInterval(function () {
       if (window.location.hash !== prevHash) {
         prevHash = window.location.hash;
-        hashChangeFunct();
+        _saTabsHashChangeFunct();
       }
     }, 100);
     
-    // initial Hash Change Setup
     $(window).load(function(){
-       hashChangeFunct();
+       _saTabsHashChangeFunct();
     });
 
-    /* // not currently used, left for reference
-    $(window).on('hashchange', function (event) {  
-
-      // triggers the hashchange manually on pageload. 
-      // Adapted from http://stackoverflow.com/questions/20652020/the-hashchange-event-of-jquery-doesnt-work-if-i-open-a-page-with-hash-directly
-    }).trigger('hashchange'); */
-
     console.log('saTabs initiated');
-  }; // End saTabs
+  }; 
 
 
   /* * Init Function * */
   var init = function(input){
-    _saTabs();
+    saTabs();
   };
 
 
