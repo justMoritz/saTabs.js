@@ -74,7 +74,7 @@ I recommend it to look something like this:
     <script src="path/to/your/scripts/jquery-2.1.4.min.js"></script>
     <script src="path/to/your/scripts/tabscroll.js"></script>
 
-### That's it! Have fun.
+### That's it! Have fun. 
 
 
 ## Advanced Setup:
