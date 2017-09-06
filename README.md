@@ -69,11 +69,10 @@ I recommend it to look something like this:
     </div>
 
 
-Then simply include jQuery. Include tabscroll.js. Call the Init Method.
+### 3.) include jQuery. Include tabscroll.js.
 
     <script src="path/to/your/scripts/jquery-2.1.4.min.js"></script>
     <script src="path/to/your/scripts/tabscroll.js"></script>
-    <script> saTabs.init(); </script>
 
 ### That's it! Have fun.
 
