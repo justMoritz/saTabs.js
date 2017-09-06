@@ -123,11 +123,7 @@ var saTabs = (function( $ ){
 
   /* * Init Function * */
   var init = function(input){
-    
-    // Document Ready 
-    $(function(){
-      _saTabs();
-    });
+    _saTabs();
   };
 
 
@@ -140,3 +136,6 @@ var saTabs = (function( $ ){
 })(jQuery);
 
 
+$(function(){
+  saTabs.init();
+});
