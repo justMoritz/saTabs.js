@@ -89,13 +89,14 @@ var saTabs = (function( $ ){
    *    funcionality, which I would like to break out into different functions eventually.
    */
   var _saTabsHashChangeFunct = function( masterinput ) {
-    /* checks the current location, matches it to the href-containing link, and adds correct class to parent */
-    var __activeClassHelperFunction = function($inputLoc){
-      for (i=0; i<$tabscrollAnchors.length; i++){
-        var $curEl = $($tabscrollAnchors[i]);
-        if( $curEl.attr('href') === "#"+$inputLoc ){
+    /* checks the current location, matches it to the element containing the link, and adds correct class */
+    var __activeClassHelperFunction = function(inputLoc){
+      var $naviEls = $('[data-tabscrollnavi]');
+      for (i=0; i<$naviEls.length; i++){
+        var $curEl = $($naviEls[i]);
+        if( $curEl.data('tabscrollnavi') === inputLoc ){
           $('.tabscroll_activeNavi').removeClass('tabscroll_activeNavi');
-          $curEl.parent().addClass('tabscroll_activeNavi');
+          $curEl.addClass('tabscroll_activeNavi');
         }
       }
     };
