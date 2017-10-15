@@ -1,4 +1,5 @@
 /* moritzzimmer.com
+ * Tabscroll 1.4.0
  *
  * written by Moritz Zimmer, 2016 – 2017
  * http://www.moritzzimmer.com
@@ -8,6 +9,18 @@
  *
  */
 var saTabs = (function( $ ){
+
+  var _global = {
+    indexable: true,
+  };
+
+ /**
+  * Public Helper Method that sets the Application status to non-indexable 
+  */
+  var nonID = function(){
+    _global.indexable = false;
+  };
+
 
 /* * SA Tabs Functionality * * /
    * 
@@ -38,14 +51,6 @@ var saTabs = (function( $ ){
    *    Also Removes each id tag of an data-tabscroll element (to help some browsers prevent)
    *    default behaviour, and hiding all sections initially except the one specified.
    */
-
-  var _indexable = true; 
-
-  var nonID = function(){
-    _indexable = false;
-  } 
-
-
   var _saTabsSetUpPage = function() {
     $tabscrollAnchors = $("[data-tabscrollnavcontainer]").find("a").not("[data-saexclude]");
     $transition_type = $("[data-tabscrollnavcontainer]").attr("data-tabscrollnavcontainer");
@@ -58,7 +63,7 @@ var saTabs = (function( $ ){
       $(eachAnchor).attr("data-tabscroll", eachAnchor.substring(1));
 
       // removes link if in non-indexable version (to not interfere with app status keeping)
-      if(!_indexable){
+      if(!_global.indexable){
         $curEl.removeAttr("href").css('cursor', 'pointer');
         $curEl.on('click', function(){
           var tab_target = $(this).parent().attr("data-tabscrollnavi");
@@ -77,6 +82,9 @@ var saTabs = (function( $ ){
    * 3: _saTabsHashChangeFunct: 
    *    Called both initially in saTabs and also on each Hash (URL fragment) change, monitured
    *    by the saTabs Method.
+   *
+   *    If this function is called with an input parameter, use that as location. This means it was
+   *    called as the non-indexed version through a click event. If not, grab location from the href
    *
    *    Writing the URL that raised the event into a string, stripping off everything before the hash
    *    In order to parse the users navigational input.
@@ -103,8 +111,6 @@ var saTabs = (function( $ ){
 
     var location;
 
-    // if the function is called with an input parameter, use that as location. 
-    // If not, grab location from the href
     if (typeof masterinput !== 'undefined') {
       location = masterinput;
     }
@@ -141,6 +147,7 @@ var saTabs = (function( $ ){
    * 1: saTabs: 
    *    Runs the _saTabsSetUpPage function, the initial instance of the _saTabsHashChangeFunct,
    *    then also monitors the hash change to run the _saTabsHashChangeFunct as needed.
+   *    Only Monitors hash change if the indexable setting is set to true
    *
    *    Hash changed is implemented as follows:
    *    Stores the previous hash, then listens if it has changed every frew millisectons
@@ -150,9 +157,8 @@ var saTabs = (function( $ ){
    */
   var saTabs = function () {
     _saTabsSetUpPage();
-    
-    // if indexable, perform hash change function.
-    if(_indexable){
+
+    if(_global.indexable){
       var prevHash = window.location.hash;
       window.setInterval(function () {
         if (window.location.hash !== prevHash) {
@@ -160,10 +166,6 @@ var saTabs = (function( $ ){
           _saTabsHashChangeFunct();
         }
       }, 100);
-    }
-    // if not, listen for click
-    else{
-
     }
     
     $(window).load(function(){
