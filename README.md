@@ -92,6 +92,11 @@ You may not want your tabs to be indexed / indexable. Tabscroll keeps track of y
 
 Now Tabscroll can accomodate, by simply calling the `saTabs.nonID();` method some time *after* you included tabscroll.js. This will not index your tabs, not write to the URL, but still keep the same markup and functionality for your tabs.
 
+### Exclude Links
+
+You want to have a link within your navigation that does something else. An external link, a popup link, etc. This is possible by simply adding the `data-saexclude` attribute to the anchor element.
+
+
 ## Advantages:
 
 * No cluttered Markup: You just need to add one custom data-attribute.
