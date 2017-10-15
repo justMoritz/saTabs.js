@@ -79,10 +79,18 @@ I recommend it to look something like this:
 
 ## Advanced Setup:
 
+### Transitions
+
 You can control the type of transition between tabs with the `data-tabscrollnavcontainer` attribute. You can set it to:
 - `fade`
 - `slide`
 - or leave blank for no transition at all
+
+### Non-Index Version
+
+You may not want your tabs to be indexed / indexable. Tabscroll keeps track of your tabs via the URL, by adding a fragment (“hash”) to the end of the URL. *But what if you have an application on your page that already does that?*
+
+Now Tabscroll can accomodate, by simply calling the `saTabs.nonID();` method some time *after* you included tabscroll.js. This will not index your tabs, not write to the URL, but still keep the same markup and functionality for your tabs.
 
 ## Advantages:
 

@@ -1,4 +1,5 @@
 /* moritzzimmer.com
+ * Tabscroll 1.4.0
  *
  * written by Moritz Zimmer, 2016 – 2017
  * http://www.moritzzimmer.com
@@ -8,6 +9,18 @@
  *
  */
 var saTabs = (function( $ ){
+
+  var _global = {
+    indexable: true,
+  };
+
+ /**
+  * Public Helper Method that sets the Application status to non-indexable 
+  */
+  var nonID = function(){
+    _global.indexable = false;
+  };
+
 
 /* * SA Tabs Functionality * * /
    * 
@@ -44,10 +57,21 @@ var saTabs = (function( $ ){
     $($tabscrollAnchors[0]).parent().addClass("tabscroll_activeNavi");
 
     for ($i = 0; $i < $tabscrollAnchors.length; $i++){
-      var $eachAnchor = $($tabscrollAnchors[$i]).attr("href");
-      $($tabscrollAnchors[$i]).parent().attr("data-tabscrollnavi", $eachAnchor.substring(1)); 
-      $($eachAnchor).attr("data-tabscroll", $eachAnchor.substring(1));
-    }    
+      var $curEl = $($tabscrollAnchors[$i]),
+          eachAnchor = $curEl.attr("href");
+      $curEl.parent().attr("data-tabscrollnavi", eachAnchor.substring(1)); 
+      $(eachAnchor).attr("data-tabscroll", eachAnchor.substring(1));
+
+      // removes link if in non-indexable version (to not interfere with app status keeping)
+      if(!_global.indexable){
+        $curEl.removeAttr("href").css('cursor', 'pointer');
+        $curEl.on('click', function(){
+          var tab_target = $(this).parent().attr("data-tabscrollnavi");
+          console.log( tab_target );
+          _saTabsHashChangeFunct(tab_target);
+        });
+      }
+    }
     
     $("[data-tabscroll]").removeAttr('id');
     $("[data-tabscroll]:first-of-type").siblings("[data-tabscroll]").hide();   
@@ -59,6 +83,9 @@ var saTabs = (function( $ ){
    *    Called both initially in saTabs and also on each Hash (URL fragment) change, monitured
    *    by the saTabs Method.
    *
+   *    If this function is called with an input parameter, use that as location. This means it was
+   *    called as the non-indexed version through a click event. If not, grab location from the href
+   *
    *    Writing the URL that raised the event into a string, stripping off everything before the hash
    *    In order to parse the users navigational input.
    *
@@ -69,21 +96,30 @@ var saTabs = (function( $ ){
    *    Finally, also checks for the 'fade' and 'slide' transition types, and executes different 
    *    funcionality, which I would like to break out into different functions eventually.
    */
-  var _saTabsHashChangeFunct = function() {
-    /* checks the current location, matches it to the href-containing link, and adds correct class to parent */
-    var __activeClassHelperFunction = function($inputLoc){
-      for (i=0; i<$tabscrollAnchors.length; i++){
-        if( $($tabscrollAnchors[i]).attr('href') === "#"+$inputLoc ){
+  var _saTabsHashChangeFunct = function( masterinput ) {
+    /* checks the current location, matches it to the element containing the link, and adds correct class */
+    var __activeClassHelperFunction = function(inputLoc){
+      var $naviEls = $('[data-tabscrollnavi]');
+      for (i=0; i<$naviEls.length; i++){
+        var $curEl = $($naviEls[i]);
+        if( $curEl.data('tabscrollnavi') === inputLoc ){
           $('.tabscroll_activeNavi').removeClass('tabscroll_activeNavi');
-          $($tabscrollAnchors[i]).parent().addClass('tabscroll_activeNavi');
+          $curEl.addClass('tabscroll_activeNavi');
         }
       }
     };
 
-    var $location = String(document.location);    
-    $location = $location = $location.split("#")[1];
+    var location;
 
-    if ($location === undefined || $location === 'all' ){
+    if (typeof masterinput !== 'undefined') {
+      location = masterinput;
+    }
+    else{
+      location = String(document.location);    
+      location = location = location.split("#")[1]; // wtf is this ...
+    }
+
+    if (location === undefined || location === 'all' ){
         $("[data-tabscroll]:first-of-type").show();   
         $("[data-tabscroll]:first-of-type").addClass('activeTab');   
     }
@@ -91,17 +127,17 @@ var saTabs = (function( $ ){
       $("[data-tabscroll]").hide().removeClass('activeTab');   
 
       if ( $transition_type === 'fade') {
-        $("[data-tabscroll='"+$location+"']").fadeIn().addClass('activeTab');   
-        __activeClassHelperFunction($location);
+        $("[data-tabscroll='"+location+"']").fadeIn().addClass('activeTab');   
+        __activeClassHelperFunction(location);
 
       } 
       else if ( $transition_type === 'slide') {
-        $("[data-tabscroll='"+$location+"']").slideDown().addClass('activeTab');   
-        __activeClassHelperFunction($location);
+        $("[data-tabscroll='"+location+"']").slideDown().addClass('activeTab');   
+        __activeClassHelperFunction(location);
       }
       else{
-        $("[data-tabscroll='"+$location+"']").show().addClass('activeTab');   
-        __activeClassHelperFunction($location);
+        $("[data-tabscroll='"+location+"']").show().addClass('activeTab');   
+        __activeClassHelperFunction(location);
       }
     }             
   };
@@ -111,6 +147,7 @@ var saTabs = (function( $ ){
    * 1: saTabs: 
    *    Runs the _saTabsSetUpPage function, the initial instance of the _saTabsHashChangeFunct,
    *    then also monitors the hash change to run the _saTabsHashChangeFunct as needed.
+   *    Only Monitors hash change if the indexable setting is set to true
    *
    *    Hash changed is implemented as follows:
    *    Stores the previous hash, then listens if it has changed every frew millisectons
@@ -120,14 +157,16 @@ var saTabs = (function( $ ){
    */
   var saTabs = function () {
     _saTabsSetUpPage();
-    
-    var prevHash = window.location.hash;
-    window.setInterval(function () {
-      if (window.location.hash !== prevHash) {
-        prevHash = window.location.hash;
-        _saTabsHashChangeFunct();
-      }
-    }, 100);
+
+    if(_global.indexable){
+      var prevHash = window.location.hash;
+      window.setInterval(function () {
+        if (window.location.hash !== prevHash) {
+          prevHash = window.location.hash;
+          _saTabsHashChangeFunct();
+        }
+      }, 100);
+    }
     
     $(window).load(function(){
        _saTabsHashChangeFunct();
@@ -148,6 +187,7 @@ var saTabs = (function( $ ){
    */
   return{
     init: init,
+    nonID: nonID,
   };
 })(jQuery);
 
