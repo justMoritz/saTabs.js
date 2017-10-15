@@ -13,38 +13,43 @@
             *{
                 margin: 0;
                 padding: 0;
+                background-color: black;
+                color: white;
             }
             body{
                 font-family: 'GP-base24 Web', Verdana, sans-serif;  
                 padding: 0 7%;
+                
             }
             ul li{
                 display: inline-block;
-                background-color: black;
+                background-color: white;
                 padding: 1%;
             }
             ul{
-                background-color: black;   
+                background-color: white;   
                 padding: 0;
                 font-size: 66%;
             }
             a, a:visited, a:active, a:hover{
-                color: white;
+                color: black;
+                background-color: white;
             }
             .tabscroll_activeNavi{
-                background-color: white;  
+                background-color: black;  
                 border-width: 2px 2px 0 2px;
-                border-color: black;
+                border-color: white;
                 border-style: solid
             }
             .tabscroll_activeNavi a, .tabscroll_activeNavi a:visited, .tabscroll_activeNavi a:active, .tabscroll_activeNavi a:hover{
-                color: black;
+                color: white;
+                background-color: black;
             }
             article{
                 margin: 0;
                 padding: 0;   
                 border-width: 0 2px 2px 2px;
-                border-color: black;
+                border-color: white;
                 border-style: solid
             }
             h1{
@@ -57,7 +62,7 @@
                 padding: 1%;   
             }
             footer{
-                border-top: 2px solid black;
+                border-top: 2px solid white;
                 width: 100%;
                 margin-top: 75px;
             }
@@ -80,7 +85,7 @@
     <body>
         
         <header>
-            <h1>Tabscroll Sample Page</h1>
+            <h1>Tabscroll Sample — Non indexed version</h1>
         </header>
 
         <main>
@@ -102,7 +107,7 @@
                     <a href="http://www.moritzzimmer.com/" target="_blank" rel="noreferrer noopener" data-saexclude>I am an external Link and not part of the Tabs!</a>
                 </li>
                 <li>
-                    <a href="sample-noID.html" data-saexclude>Non-Indexed Version</a>
+                    <a href="sample.html" data-saexclude>Indexed Version</a>
                 </li>
             </ul>
             
@@ -110,7 +115,7 @@
             <article>
                 <section id="one">
                     <h3>Section One</h3>
-                    <p class="notice">These Tabs are indexed. The URL keeps track of which tab is open with the fragement (“hash tag”). You can bookmark, save, or access them through the browser history. </p>
+                    <p class="notice">These Tabs are not indexed. You'll notice the URL doesn't change, and you won't be able to bookmark, save, or access them through the browser history. But they may be useful, like if you have other parts of the page save their application state in the URL. </p>
                     <p>Sed dignissim lacinia nunc. Curabitur tortor. Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor. Morbi lectus risus, iaculis vel, suscipit quis, luctus non, massa. Fusce ac turpis quis ligula lacinia aliquet. Mauris ipsum. Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat condimentum velit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. </p>
                     <p>Nam nec ante. Sed lacinia, urna non tincidunt mattis, tortor neque adipiscing diam, a cursus ipsum ante quis turpis. Nulla facilisi. Ut fringilla. Suspendisse potenti. Nunc feugiat mi a tellus consequat imperdiet. Vestibulum sapien. Proin quam. Etiam ultrices. Suspendisse in justo eu magna luctus suscipit. Sed lectus. Integer euismod lacus luctus magna. Quisque cursus, metus vitae pharetra auctor, sem massa mattis sem, at interdum magna augue eget diam. </p>
                     <p>Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Morbi lacinia molestie dui. Praesent blandit dolor. Sed non quam. In vel mi sit amet augue congue elementum. Morbi in ipsum sit amet pede facilisis laoreet. Donec lacus nunc, viverra nec, blandit vel, egestas et, augue. Vestibulum tincidunt malesuada tellus. Ut ultrices ultrices enim. Curabitur sit amet mauris. Morbi in dui quis est pulvinar ullamcorper. Nulla facilisi. Integer lacinia sollicitudin massa. Cras metus. </p>
@@ -146,5 +151,6 @@
         
         <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.4.min.js"></script>
         <script src="../tabscroll.js"></script>
+        <script> saTabs.nonID(); </script>
     </body>
 </html>

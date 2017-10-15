@@ -38,16 +38,35 @@ var saTabs = (function( $ ){
    *    Also Removes each id tag of an data-tabscroll element (to help some browsers prevent)
    *    default behaviour, and hiding all sections initially except the one specified.
    */
+
+  var _indexable = true; 
+
+  var nonID = function(){
+    _indexable = false;
+  } 
+
+
   var _saTabsSetUpPage = function() {
     $tabscrollAnchors = $("[data-tabscrollnavcontainer]").find("a").not("[data-saexclude]");
     $transition_type = $("[data-tabscrollnavcontainer]").attr("data-tabscrollnavcontainer");
     $($tabscrollAnchors[0]).parent().addClass("tabscroll_activeNavi");
 
     for ($i = 0; $i < $tabscrollAnchors.length; $i++){
-      var $eachAnchor = $($tabscrollAnchors[$i]).attr("href");
-      $($tabscrollAnchors[$i]).parent().attr("data-tabscrollnavi", $eachAnchor.substring(1)); 
-      $($eachAnchor).attr("data-tabscroll", $eachAnchor.substring(1));
-    }    
+      var $curEl = $($tabscrollAnchors[$i]),
+          eachAnchor = $curEl.attr("href");
+      $curEl.parent().attr("data-tabscrollnavi", eachAnchor.substring(1)); 
+      $(eachAnchor).attr("data-tabscroll", eachAnchor.substring(1));
+
+      // removes link if in non-indexable version (to not interfere with app status keeping)
+      if(!_indexable){
+        $curEl.removeAttr("href").css('cursor', 'pointer');
+        $curEl.on('click', function(){
+          var tab_target = $(this).parent().attr("data-tabscrollnavi");
+          console.log( tab_target );
+          _saTabsHashChangeFunct(tab_target);
+        });
+      }
+    }
     
     $("[data-tabscroll]").removeAttr('id');
     $("[data-tabscroll]:first-of-type").siblings("[data-tabscroll]").hide();   
@@ -69,21 +88,32 @@ var saTabs = (function( $ ){
    *    Finally, also checks for the 'fade' and 'slide' transition types, and executes different 
    *    funcionality, which I would like to break out into different functions eventually.
    */
-  var _saTabsHashChangeFunct = function() {
-    /* checks the current location, matches it to the href-containing link, and adds correct class to parent */
-    var __activeClassHelperFunction = function($inputLoc){
-      for (i=0; i<$tabscrollAnchors.length; i++){
-        if( $($tabscrollAnchors[i]).attr('href') === "#"+$inputLoc ){
+  var _saTabsHashChangeFunct = function( masterinput ) {
+    /* checks the current location, matches it to the element containing the link, and adds correct class */
+    var __activeClassHelperFunction = function(inputLoc){
+      var $naviEls = $('[data-tabscrollnavi]');
+      for (i=0; i<$naviEls.length; i++){
+        var $curEl = $($naviEls[i]);
+        if( $curEl.data('tabscrollnavi') === inputLoc ){
           $('.tabscroll_activeNavi').removeClass('tabscroll_activeNavi');
-          $($tabscrollAnchors[i]).parent().addClass('tabscroll_activeNavi');
+          $curEl.addClass('tabscroll_activeNavi');
         }
       }
     };
 
-    var $location = String(document.location);    
-    $location = $location = $location.split("#")[1];
+    var location;
 
-    if ($location === undefined || $location === 'all' ){
+    // if the function is called with an input parameter, use that as location. 
+    // If not, grab location from the href
+    if (typeof masterinput !== 'undefined') {
+      location = masterinput;
+    }
+    else{
+      location = String(document.location);    
+      location = location = location.split("#")[1]; // wtf is this ...
+    }
+
+    if (location === undefined || location === 'all' ){
         $("[data-tabscroll]:first-of-type").show();   
         $("[data-tabscroll]:first-of-type").addClass('activeTab');   
     }
@@ -91,17 +121,17 @@ var saTabs = (function( $ ){
       $("[data-tabscroll]").hide().removeClass('activeTab');   
 
       if ( $transition_type === 'fade') {
-        $("[data-tabscroll='"+$location+"']").fadeIn().addClass('activeTab');   
-        __activeClassHelperFunction($location);
+        $("[data-tabscroll='"+location+"']").fadeIn().addClass('activeTab');   
+        __activeClassHelperFunction(location);
 
       } 
       else if ( $transition_type === 'slide') {
-        $("[data-tabscroll='"+$location+"']").slideDown().addClass('activeTab');   
-        __activeClassHelperFunction($location);
+        $("[data-tabscroll='"+location+"']").slideDown().addClass('activeTab');   
+        __activeClassHelperFunction(location);
       }
       else{
-        $("[data-tabscroll='"+$location+"']").show().addClass('activeTab');   
-        __activeClassHelperFunction($location);
+        $("[data-tabscroll='"+location+"']").show().addClass('activeTab');   
+        __activeClassHelperFunction(location);
       }
     }             
   };
@@ -121,13 +151,20 @@ var saTabs = (function( $ ){
   var saTabs = function () {
     _saTabsSetUpPage();
     
-    var prevHash = window.location.hash;
-    window.setInterval(function () {
-      if (window.location.hash !== prevHash) {
-        prevHash = window.location.hash;
-        _saTabsHashChangeFunct();
-      }
-    }, 100);
+    // if indexable, perform hash change function.
+    if(_indexable){
+      var prevHash = window.location.hash;
+      window.setInterval(function () {
+        if (window.location.hash !== prevHash) {
+          prevHash = window.location.hash;
+          _saTabsHashChangeFunct();
+        }
+      }, 100);
+    }
+    // if not, listen for click
+    else{
+
+    }
     
     $(window).load(function(){
        _saTabsHashChangeFunct();
@@ -148,6 +185,7 @@ var saTabs = (function( $ ){
    */
   return{
     init: init,
+    nonID: nonID,
   };
 })(jQuery);
 
