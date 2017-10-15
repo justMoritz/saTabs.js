@@ -1,0 +1,26 @@
+{
+  "name": "tabscroll.js",
+  "version": "1.4.0",
+  "description": "A jQuery Plugin for easily adding functional Tabs to any website. Known as SA Tabs within Scrollimate",
+  "main": "tabscroll.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/justMoritz/tabscroll.js.git"
+  },
+  "keywords": [
+    "Tabs",
+    "jQuery",
+    "Tabs",
+    "tabbed",
+    "content"
+  ],
+  "author": "Moritz Zimmer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/justMoritz/tabscroll.js/issues"
+  },
+  "homepage": "https://github.com/justMoritz/tabscroll.js#readme"
+}

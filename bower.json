@@ -1,0 +1,24 @@
+{
+  "name": "Tabscroll",
+  "main": "tabscroll.js",
+  "homepage": "https://github.com/justMoritz/tabscroll.js",
+  "authors": [
+    "Moritz Zimmer <moritz@zimmermail.net>"
+  ],
+  "description": "A jQuery Plugin for easily adding functional Tabs to any website. Known as SA Tabs within Scrollimate.",
+  "keywords": [
+    "Tabs",
+    "jQuery",
+    "Tabs",
+    "tabbed",
+    "content"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
